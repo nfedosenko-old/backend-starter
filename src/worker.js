@@ -1,6 +1,5 @@
 const express = require('express');
 const errorHandler = require('errorhandler');
-const settings = require('./config/settings');
 const router = require('./router');
 const passportInitalize = require('./config/passport');
 const dbConnection = require('./config/db');
@@ -29,8 +28,8 @@ if (app.get('env') === 'development') {
  */
 
 db.once('open', () => {
-    app.listen(settings.port, () => {
-        console.log(`App listening on port ${settings.port}`);
+    app.listen(process.env.PORT, () => {
+        console.log(`App listening on port ${process.env.PORT}`);
     });
 });
 
