@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "pm2 start ../env/ecosystem.config.js --env=development",
+    "start": "pm2 start ./env/ecosystem.config.js --env=development",
     "stop": "pm2 stop --watch 0"
   },
   "author": "",
