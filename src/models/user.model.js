@@ -1,29 +1,9 @@
-const mongoose = require('mongoose');
-const passportLocalMongoose = require('passport-local-mongoose');
+const db = require('../config/db');
+const Sequlize = require('sequelize');
 
-const userSchema = new mongoose.Schema({
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    password: {
-        type: String,
-        required: true,
-        minlength: 8,
-        maxlength: 32
-    },
-    role: {
-        type: String,
-        required: true
-    },
-    accessToken: {
-        type: String
-    }
+const User = db.define('user', {
+    email: {type: Sequlize.DataTypes.STRING, unique: true},
+    password: Sequlize.DataTypes.STRING,
+    balance: Sequlize.DataTypes.INTEGER,
+    token: Sequlize.DataTypes.STRING
 });
-
-userSchema.plugin(passportLocalMongoose, {
-    usernameField: 'email'
-});
-
-module.exports = mongoose.model('User', userSchema);

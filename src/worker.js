@@ -8,7 +8,7 @@ const middlewares = require('./config/middlewares');
 const {gracefulExit} = require('./utils/gracefulExit');
 
 const app = express();
-const db = dbConnection();
+// const db = dbConnection();
 
 /**
  * Adding Middleware(s)
@@ -28,11 +28,11 @@ if (app.get('env') === 'development') {
  * Starting server
  */
 
-db.once('open', () => {
-    app.listen(settings.port, () => {
-        console.log(`App listening on port ${settings.port}`);
-    });
-});
+// db.once('open', () => {
+//     app.listen(settings.port, () => {
+//         console.log(`App listening on port ${settings.port}`);
+//     });
+// });
 
 process.on('unhandledRejection', (reason, p) => {
     console.log('Unhandled Rejection at:', p, 'reason:', reason);
