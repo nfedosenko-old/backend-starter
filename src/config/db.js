@@ -1,11 +1,15 @@
 const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 const mysql = require('mysql2');
-const settings = require('./settings');
-const Bluebird = require('bluebird');
 
-
-const db = new Sequelize('test', 'root', '', {
+const db = new Sequelize('test', process.env.DB_USERNAME, process.env.DB_PASSWORD, {
     dialect: 'mysql',
+    host: 'localhost',
+    port: 3306,
+    dialectOptions: {
+        insecureAuth: true
+    },
+    operatorsAliases: Op,
     pool: {
         max: 5,
         min: 0,
