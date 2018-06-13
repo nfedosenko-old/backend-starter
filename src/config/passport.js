@@ -1,24 +1,42 @@
 const passport = require('passport');
-const BearerStrategy = require('passport-http-bearer');
-const User = require('../models/user.model');
+const LocalStrategy = require('passport-local');
+const {User} = require('../models');
 
 module.exports = () => {
-    // passport.serializeUser(User.serializeUser());
-    // passport.deserializeUser(User.deserializeUser());
-    //
-    // passport.use(User.createStrategy());
-    //
-    // passport.use(new BearerStrategy(
-    //     (token, done) => {
-    //         User.find({accessToken: token}, function (err, user) {
-    //             if (err) {
-    //                 return done(err);
-    //             }
-    //             if (!user.length) {
-    //                 return done(null, false);
-    //             }
-    //             return done(null, user[0], {scope: 'all'});
-    //         });
-    //     }
-    // ));
+    passport.serializeUser((user, done) => {
+        done(null, user.id);
+    });
+
+    passport.deserializeUser((id, done) => {
+        User.findById(id).then((user) => {
+            if (user) {
+                done(null, user.get());
+            } else {
+                done(user.errors, null);
+            }
+        });
+    });
+
+    passport.use('local', new LocalStrategy({
+        usernameField: 'email',
+        passwordField: 'password',
+        passReqToCallback: true
+    }, (req, email, password, done) => {
+
+        User.findOne({
+            where: {
+                email: email
+            }
+        }).then((user) => {
+            if (!user) {
+                return done(null, false);
+            }
+
+            if (!user.validatePassword(password)) {
+                return done(null, false);
+            }
+
+            return done(null, user);
+        });
+    }));
 };

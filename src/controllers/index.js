@@ -1,5 +1,7 @@
 const controllers = [
-    require('./user.controller')
+    require('./user.controller'),
+    require('./static.controller'),
+    require('./auth.controller')
 ];
 
 module.exports = (router) => {
