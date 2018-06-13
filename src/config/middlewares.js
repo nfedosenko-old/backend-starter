@@ -9,8 +9,9 @@ const passport = require('passport');
 const rootPath = require('../rootPath');
 
 module.exports = (app) => {
-    app.set('views', path.join(rootPath, '/views'));
-    app.set('view engine', 'pug');
+    app.set('views', path.join(rootPath, '/views/pages'));
+    // set the view engine to ejs
+    app.set('view engine', 'ejs');
     app.enable('trust proxy');
     app.use(helmet());
     app.use(cors());

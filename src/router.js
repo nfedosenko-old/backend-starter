@@ -1,4 +1,3 @@
-const pug = require('pug');
 const {Router} = require('express');
 const controllers = require('./controllers');
 
@@ -10,13 +9,8 @@ router.get('/', (req, res) => {
     res.sendFile('./dist/index.html');
 });
 
-
-
-router.get('/pug', (req, res) => {
-    /* pug.renderFile('index.pug', {
-         name: 'Timothy'
-     })*/
-    res.render('index', {pageTitle: 'Pug', youAreUsingPug: true});
+router.get('/main', (req, res) => {
+    res.render('index', {pageTitle: 'EJS'});
 });
 
 
