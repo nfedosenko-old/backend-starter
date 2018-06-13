@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 
 module.exports = (db, Sequelize) => {
-    return db.define('user', {
+    const UserModel = db.define('user', {
         id: {
             autoIncrement: true,
             primaryKey: true,
@@ -18,14 +18,22 @@ module.exports = (db, Sequelize) => {
             allowNull: false
         },
         balance: Sequelize.DataTypes.INTEGER
-    }, {
-        instanceMethods: {
-            generateHash(password) {
-                return bcrypt.hash(password, bcrypt.genSaltSync(8));
-            },
-            validatePassword(password) {
-                return bcrypt.compare(password, this.password);
-            }
-        }
     });
+
+    UserModel.generateHash = (password) => {
+        return bcrypt.hash(password, bcrypt.genSaltSync(8));
+    };
+
+
+    UserModel.prototype.validatePassword = function (password) {
+        return bcrypt.compare(password, this.password);
+    };
+
+    UserModel.hook('beforeCreate', (user, options) => {
+        return UserModel.generateHash(user.password).then(hashedPassword => {
+            user.password = hashedPassword;
+        });
+    });
+
+    return UserModel;
 };

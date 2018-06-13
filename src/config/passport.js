@@ -36,7 +36,9 @@ module.exports = () => {
                 return done(null, false);
             }
 
-            return done(null, user);
+            console.log(user.get());
+
+            return done(null, user.get());
         });
     }));
 };
