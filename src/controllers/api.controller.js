@@ -5,3 +5,5 @@ class ApiController extends BasicController {
         super(router, `/api/${prefix}`);
     }
 }
+
+module.exports = ApiController;

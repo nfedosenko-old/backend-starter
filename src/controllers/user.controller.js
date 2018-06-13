@@ -1,7 +1,7 @@
-const BasicController = require('./basic.controller');
+const ApiController = require('./api.controller');
 const {User} = require('../models');
 
-class UserController extends BasicController {
+class UserController extends ApiController {
     constructor(router) {
         super(router, 'user');
     }
@@ -11,7 +11,7 @@ class UserController extends BasicController {
      * @param router
      */
     link(router) {
-        router.get(`/${this.prefix}/test`, this.test);
+        router.get(`${this.prefix}/test`, this.test);
     }
 
     test(req, res) {
