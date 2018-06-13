@@ -8,19 +8,20 @@ const {gracefulExit} = require('./utils/gracefulExit');
 
 const app = express();
 
-/**
- * Adding Middleware(s)
- */
-middlewares(app);
-
 
 passportInitalize();
-
-app.use('/', router);
 
 if (app.get('env') === 'development') {
     app.use(errorHandler());
 }
+
+/**
+ * Adding Middleware(s)
+ */
+middlewares(app, db);
+
+
+app.use('/', router);
 
 /**
  * Starting server
@@ -29,6 +30,7 @@ if (app.get('env') === 'development') {
 db
     .sync()
     .then(() => {
+
         app.listen(process.env.PORT, () => {
             console.log(`App listening on port ${process.env.PORT}`);
         });

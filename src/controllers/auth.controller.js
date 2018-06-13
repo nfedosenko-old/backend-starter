@@ -12,6 +12,10 @@ class AuthController extends ApiController {
         router.post(`${this.prefix}/signup`, this.signup);
     }
 
+    test(req, res) {
+        console.log(req.body);
+    }
+
     signup(req, res) {
         const email = req.body.email;
         const password = req.body.password;

@@ -22,7 +22,6 @@ module.exports = () => {
         passwordField: 'password',
         passReqToCallback: true
     }, (req, email, password, done) => {
-
         User.findOne({
             where: {
                 email: email
@@ -35,8 +34,6 @@ module.exports = () => {
             if (!user.validatePassword(password)) {
                 return done(null, false);
             }
-
-            console.log(user.get());
 
             return done(null, user.get());
         });
