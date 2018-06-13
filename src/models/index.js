@@ -3,4 +3,4 @@ const Sequelize = require('sequelize');
 
 const user = require('./user.model');
 
-exports.UserModel = user(db, Sequelize);
+exports.User = user(db, Sequelize);

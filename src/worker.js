@@ -16,7 +16,7 @@ middlewares(app);
 
 passportInitalize();
 
-app.use('/api', router);
+app.use('/', router);
 
 if (app.get('env') === 'development') {
     app.use(errorHandler());

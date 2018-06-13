@@ -1,8 +1,31 @@
-module.exports = (db, Sequlize) => {
+const bcrypt = require('bcrypt');
+
+module.exports = (db, Sequelize) => {
     return db.define('user', {
-        email: {type: Sequlize.DataTypes.STRING, unique: true},
-        password: Sequlize.DataTypes.STRING,
-        balance: Sequlize.DataTypes.INTEGER,
-        token: Sequlize.DataTypes.STRING
+        id: {
+            autoIncrement: true,
+            primaryKey: true,
+            type: Sequelize.INTEGER
+        },
+        email: {
+            type: Sequelize.DataTypes.STRING,
+            validate: {
+                isEmail: true
+            }
+        },
+        password: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        balance: Sequelize.DataTypes.INTEGER
+    }, {
+        instanceMethods: {
+            generateHash(password) {
+                return bcrypt.hash(password, bcrypt.genSaltSync(8));
+            },
+            validatePassword(password) {
+                return bcrypt.compare(password, this.password);
+            }
+        }
     });
 };
