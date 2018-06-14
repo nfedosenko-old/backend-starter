@@ -398,6 +398,10 @@ hr:last-child, .hr:last-child { margin-bottom: 0; }
 
 .no-shadow, .shadow-no { text-shadow: none !important; box-shadow: none !important; }
 
+.error {
+  color: red;
+}
+
 @media screen and (min-width: 1600px) { .section-pad { padding-top: 180px; padding-bottom: 180px; }
   .section-pad-xs { padding-top: 20px; padding-bottom: 20px; }
   .section-pad-sm { padding-top: 90px; padding-bottom: 90px; }
