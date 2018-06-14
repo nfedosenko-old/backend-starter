@@ -1,3 +1,4 @@
+const express = require('express');
 const path = require('path');
 const session = require('express-session');
 const logger = require('morgan');
@@ -9,10 +10,12 @@ const passport = require('passport');
 const rootPath = require('../rootPath');
 
 module.exports = (app) => {
-    app.set('views', path.join(rootPath, '/views/pages'));
+    app.set('views', path.join(rootPath, '/views'));
     // set the view engine to ejs
-    app.set('view engine', 'ejs');
     app.enable('trust proxy');
+    app.use(express.static(rootPath + '/views'));
+    app.set('view engine', 'ejs');
+
     app.use(helmet());
     app.use(cors());
     app.use(bodyParser.urlencoded({extended: true}));

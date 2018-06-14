@@ -13,19 +13,27 @@ class StaticController extends BasicController {
     }
 
     landing(req, res) {
-        res.render('index', {pageTitle: 'EJS'});
+        res.render('pages/landing', {
+            /* send data to view */
+        });
     }
 
     login(req, res) {
-        res.render('index', {pageTitle: 'LOGIN'});
+        res.render('pages/login', {
+            /* send data to view */
+        });
     }
 
     signup(req, res) {
-        res.render('index', {pageTitle: 'SIGNUP'});
+        res.render('signup', {
+            /* send data to view */
+        });
     }
 
     dashboard(req, res) {
-        res.render('index', {pageTitle: 'DASHBOARD'});
+        res.render('index', {
+            /* send data to view */
+        });
     }
 }
 
