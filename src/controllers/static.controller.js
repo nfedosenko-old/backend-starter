@@ -10,6 +10,8 @@ class StaticController extends BasicController {
         router.get(`${this.prefix}/login`, this.login);
         router.get(`${this.prefix}/signup`, this.signup);
         router.get(`${this.prefix}/dashboard`, this.dashboard);
+        router.get(`${this.prefix}/blog`, this.blogArchive);
+        router.get(`${this.prefix}/404`, this.pageNotFound);
     }
 
     landing(req, res) {
@@ -25,13 +27,27 @@ class StaticController extends BasicController {
     }
 
     signup(req, res) {
-        res.render('signup', {
+        res.render('pages/signup', {
             /* send data to view */
         });
     }
 
     dashboard(req, res) {
-        res.render('index', {pageTitle: 'DASHBOARD', email: req.user.email});
+        res.render('index', {
+            pageTitle: 'DASHBOARD', email: req.user.email
+        });
+    }
+
+    blogArchive(req, res) {
+        res.render('pages/blog-archive', {
+            /* send data to view */
+        })
+    }
+
+    pageNotFound(req, res) {
+        res.render('pages/404', {
+            /* send data to view */
+        })
     }
 }
 

@@ -9,9 +9,4 @@ router.get('/', (req, res) => {
     res.sendFile('./dist/index.html');
 });
 
-router.get('/main', (req, res) => {
-    res.render('index', {pageTitle: 'EJS'});
-});
-
-
 module.exports = router;
