@@ -10,18 +10,15 @@ class AuthController extends ApiController {
     link(router) {
         router.post(`${this.prefix}/login`, passport.authenticate('local', {failureRedirect: '/login'}), (req, res) => res.redirect('/dashboard'));
         router.post(`${this.prefix}/signup`, this.signup);
-        router.get(`${this.prefix}/test`, (req, res) => res.json({success: true}));
     }
 
-    login(req, res) {
-        res.redirect('/account');
+    test(req, res) {
+        console.log(req.body);
     }
 
     signup(req, res) {
         const email = req.body.email;
         const password = req.body.password;
-
-        console.log(req.body);
 
         User.create({email: email, password: password})
             .then(() => User.findOrCreate({where: {email: email}}))

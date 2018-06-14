@@ -31,9 +31,7 @@ class StaticController extends BasicController {
     }
 
     dashboard(req, res) {
-        res.render('index', {
-            /* send data to view */
-        });
+        res.render('index', {pageTitle: 'DASHBOARD', email: req.user.email});
     }
 }
 
