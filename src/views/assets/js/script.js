@@ -529,6 +529,33 @@
         }
     });
 
+    // forgot password from form handler
+    $('#forgotPasswordForm').submit(function(e) {
+        e.preventDefault();
+    }).validate({ // initialize the plugin
+        rules: {
+            email: {
+                required: true,
+                minlength: 10,
+                email: true
+            },
+        },
+        submitHandler: function () {
+            // build a json object, store in information to dataObject and get values from form
+            const email = $("input[type=text][name=email]" ).val();
+            const requestData = {
+                email,
+            };
+            console.log('requestData', requestData);
+
+            // make a api request
+            $.post('/api/auth/forgot-password/', requestData, function(res) {
+                consolel.log(res);
+                // on success execute this code
+            });
+        }
+    });
+
 	// particlesJS
 	var $particles_js = $('#particles-js');
 	if ($particles_js.length > 0 ) {

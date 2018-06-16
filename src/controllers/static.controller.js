@@ -11,6 +11,7 @@ class StaticController extends BasicController {
         router.get(`${this.prefix}/signup`, this.signup);
         router.get(`${this.prefix}/dashboard`, this.dashboard);
         router.get(`${this.prefix}/blog`, this.blogArchive);
+        router.get(`${this.prefix}/forgot-password`, this.forgotPassword);
         router.get(`${this.prefix}/404`, this.pageNotFound);
     }
 
@@ -40,6 +41,12 @@ class StaticController extends BasicController {
 
     blogArchive(req, res) {
         res.render('pages/blog-archive', {
+            /* send data to view */
+        })
+    }
+
+    forgotPassword(req, res) {
+        res.render('pages/forgot-password', {
             /* send data to view */
         })
     }
