@@ -471,7 +471,7 @@
             	// required: true,
 			}
         },
-        submitHandler: function () { // for demo
+        submitHandler: function () {
             // build a json object, store in information to dataObject and get values from form
             const email = $("input[type=text][name=email]" ).val();
             const password = $("input[type=password][name=password]" ).val();
@@ -494,6 +494,41 @@
             });
         }
     });
+
+
+    // login form handler
+    $('#loginForm').submit(function(e) {
+        e.preventDefault();
+    }).validate({ // initialize the plugin
+        rules: {
+            email: {
+                required: true,
+                minlength: 10,
+                email: true
+            },
+            password: {
+                required: true,
+                minlength: 5
+            },
+        },
+        submitHandler: function () {
+            // build a json object, store in information to dataObject and get values from form
+            const email = $("input[type=text][name=email]" ).val();
+            const password = $("input[type=password][name=password]" ).val();
+            const requestData = {
+                email,
+                password,
+            };
+            console.log('requestData', requestData);
+
+            // make a api request
+            $.post('/api/auth/login/', requestData, function(res) {
+                consolel.log(res);
+                // on success execute this code
+            });
+        }
+    });
+
 	// particlesJS
 	var $particles_js = $('#particles-js');
 	if ($particles_js.length > 0 ) {
