@@ -36,31 +36,34 @@
                         <li><a href="" class="btn-icon btn-google"><em class="fab fa-google"></em>Google</a></li>
                     </ul>
                     <div class="or-saparator"><span>or</span></div>
-                    <form action="#" class="login-form">
+                    <form id="signUpForm" class="login-form">
                         <div class="input-item">
-                            <input type="text" placeholder="Your Name" class="input-line-simple">
+                            <input name="email" type="text" placeholder="Your Email" class="input-line-simple">
+                        </div>
+                        <!--<div class="input-item">
+                            <input name="" type="text" placeholder="Your Name" class="input-line-simple">
+                        </div>-->
+                        <div class="input-item">
+                            <input name="creditCard" type="text" placeholder="XXXX XXXX XXXX XXXX" class="input-line-simple">
                         </div>
                         <div class="input-item">
-                            <input type="text" placeholder="Your Email" class="input-line-simple">
+                            <input name="password" type="password" id="password" placeholder="Password" class="input-line-simple">
                         </div>
                         <div class="input-item">
-                            <input type="password" placeholder="Password" class="input-line-simple">
-                        </div>
-                        <div class="input-item">
-                            <input type="password" placeholder="Repeat Password" class="input-line-simple">
+                            <input name="passwordConfirm" type="password" placeholder="Repeat Password" class="input-line-simple">
                         </div>
                         <div class="input-item text-left">
-                            <input type="checkbox" name="aggrement" id="aggrement" class="input-checkbox">
+                            <input name="aggrement" type="checkbox" id="aggrement" class="input-checkbox">
                             <label for="aggrement">I agree to terms &amp; Policy.</label>
                         </div>
                         <div class="text-left">
-                            <button class="btn btn-sm">Sign Up</button>
+                            <button class="btn btn-sm btn-center" type="submit">Sign Up</button>
                         </div>
                     </form>
                 </div>
                 <div class="gaps size-2x"></div>
                 <div class="form-note">
-                    Already have an account? <a href="login-dark.html">log in here!</a>
+                    Already have an account? <a href="login">log in here!</a>
                 </div>
             </div>
         </div>
@@ -76,6 +79,8 @@
 
 <!-- JavaScript (include all script here) -->
 <script src="assets/js/jquery.bundle.js?ver=124"></script>
+<script src="assets/js/vendor/jquery.validate.min.js"></script>
+<script src="assets/js/vendor/additional-methods.min.js"></script>
 <script src="assets/js/script.js?ver=124"></script>
 
 </body>
