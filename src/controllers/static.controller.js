@@ -7,11 +7,10 @@ class StaticController extends BasicController {
     }
 
     link(router) {
+        // Public routes
         router.get(`${this.prefix}`, this.landing);
         router.get(`${this.prefix}/login`, this.login);
         router.get(`${this.prefix}/signup`, this.signup);
-        router.get(`${this.prefix}/dashboard`, this.dashboard);
-        router.get(`${this.prefix}/blog`, this.blogArchive);
         router.get(`${this.prefix}/forgot-password`, this.forgotPassword);
         router.get(`${this.prefix}/404`, this.pageNotFound);
         router.get(`${this.prefix}/test`, (req, res) => {
@@ -21,6 +20,13 @@ class StaticController extends BasicController {
 
             res.json({});
         });
+
+        // Handler for invalid routes
+        router.get(`*`, this.pageNotFound);
+
+        // Protected routes
+        router.get(`${this.prefix}/dashboard`, this.ensureAuthenticated, this.dashboard);
+        router.get(`${this.prefix}/blog`, this.ensureAuthenticated, this.blogArchive);
     }
 
     landing(req, res) {
@@ -63,6 +69,14 @@ class StaticController extends BasicController {
         res.render('pages/404', {
             /* send data to view */
         })
+    }
+
+    ensureAuthenticated(req, res, next) {
+        if (req.isAuthenticated()) {
+            next();
+        } else {
+            res.redirect('/login');
+        }
     }
 }
 

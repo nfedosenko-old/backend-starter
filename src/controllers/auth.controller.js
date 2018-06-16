@@ -8,12 +8,23 @@ class AuthController extends ApiController {
     }
 
     link(router) {
-        router.post(`${this.prefix}/login`, passport.authenticate('local', {failureRedirect: '/login'}), (req, res) => res.redirect('/dashboard'));
-        router.post(`${this.prefix}/signup`, this.signup);
-    }
+        router.post(`${this.prefix}/login`, (req, res) => {
+            passport.authenticate('local', (err, user, info) => {
+                if (err) {
+                    return res.status(500).send();
+                }
 
-    test(req, res) {
-        console.log(req.body);
+                if (!user && info) {
+                    return res.status(422).send(info);
+                }
+
+                return res.status(200).json({
+                    success: true,
+                    data: user
+                });
+            })(req, res);
+        });
+        router.post(`${this.prefix}/signup`, this.signup);
     }
 
     signup(req, res) {
@@ -27,7 +38,7 @@ class AuthController extends ApiController {
                     plain: true
                 });
 
-                return res.redirect('/login');
+                return res.status(200).json({success: true, data: createdUser});
             });
 
     }

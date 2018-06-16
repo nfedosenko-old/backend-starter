@@ -28,11 +28,21 @@ module.exports = () => {
             }
         }).then((user) => {
             if (!user) {
-                return done(null, false);
+                return done(null, false, {
+                    success: false,
+                    data: {
+                        message: 'There is no such user'
+                    }
+                });
             }
 
             if (!user.validatePassword(password)) {
-                return done(null, false);
+                return done(null, false, {
+                    success: false,
+                    data: {
+                        message: 'Incorrect password'
+                    }
+                });
             }
 
             return done(null, user.get());
