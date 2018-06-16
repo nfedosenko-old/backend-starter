@@ -27,7 +27,7 @@ module.exports = (app, db) => {
         store: new SequelizeStore({
             db: db
         }),
-        secret: 'keyboard cat',
+        secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: false,
         checkExpirationInterval: 15 * 60 * 1000,

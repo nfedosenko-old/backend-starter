@@ -1,4 +1,5 @@
 const BasicController = require('./basic.controller');
+const SmartContractController = require('./smart-contract.controller');
 
 class StaticController extends BasicController {
     constructor(router) {
@@ -12,6 +13,13 @@ class StaticController extends BasicController {
         router.get(`${this.prefix}/dashboard`, this.dashboard);
         router.get(`${this.prefix}/blog`, this.blogArchive);
         router.get(`${this.prefix}/404`, this.pageNotFound);
+        router.get(`${this.prefix}/test`, (req, res) => {
+            const ct = new SmartContractController();
+
+            ct.getBalance();
+
+            res.json({});
+        });
     }
 
     landing(req, res) {
@@ -33,8 +41,8 @@ class StaticController extends BasicController {
     }
 
     dashboard(req, res) {
-        res.render('index', {
-            pageTitle: 'DASHBOARD', email: req.user.email
+        res.render('pages/index', {
+            pageTitle: 'DASHBOARD'
         });
     }
 
