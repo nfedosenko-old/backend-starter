@@ -444,6 +444,14 @@
 		});
 	}
 
+    //custom validation rule
+    $.validator.addMethod("walletAddress",
+        function(value, element) {
+            return /^0x[a-fA-F0-9]{40}$/.test(value);
+        },
+        "Sorry, your wallet address is wrong."
+    );
+
     // sign up form handler
     $('#signUpForm').submit(function(e) {
         e.preventDefault();
@@ -463,10 +471,10 @@
                 minlength: 5,
 				equalTo: "#password"
             },
-            creditCard: {
+            walletAddress: {
                 required: true,
-                creditcard: true,
-            },
+                walletAddress: true,
+			},
             aggrement: {
             	// required: true,
 			}
@@ -476,22 +484,28 @@
             const email = $("input[type=text][name=email]" ).val();
             const password = $("input[type=password][name=password]" ).val();
             const confirmPassword = $("input[type=password][name=password]" ).val();
-            const creditCard = $("input[type=text][name=creditCard]" ).val();
+            const walletAddress = $("input[type=text][name=ethereumAdress]" ).val();
             const aggrement = $("input[type=checkbox][name=aggrement]:checked" ).is(':checked');
             const requestData = {
                 email,
                 password,
                 confirmPassword,
-                creditCard,
+                walletAddress,
                 aggrement
             };
             console.log('requestData', requestData);
 
             // make a api request
-            $.post('/api/auth/signup/', requestData, function(res) {
-                consolel.log(res);
-                // on success execute this code
-            });
+            $.post('/api/auth/signup/', requestData)
+				.done(function (res) {
+					console.log('res', res);
+                })
+				.fail(function(res) {
+                    console.log(res);
+                    const errorMessage = 'Server error';
+                    $( "#server-error").append(errorMessage);
+
+                });
         }
     });
 
@@ -522,10 +536,16 @@
             console.log('requestData', requestData);
 
             // make a api request
-            $.post('/api/auth/login/', requestData, function(res) {
-                consolel.log(res);
-                // on success execute this code
-            });
+            $.post('/api/auth/login/', requestData)
+                .done(function (res) {
+                    console.log('res', res);
+                })
+                .fail(function(res) {
+                    console.log(res);
+                    const errorMessage = 'Server error';
+                    $( "#server-error").append(errorMessage);
+
+                });
         }
     });
 
@@ -549,10 +569,16 @@
             console.log('requestData', requestData);
 
             // make a api request
-            $.post('/api/auth/forgot-password/', requestData, function(res) {
-                consolel.log(res);
-                // on success execute this code
-            });
+            $.post('/api/auth/forgot-password/', requestData)
+                .done(function (res) {
+                    console.log('res', res);
+                })
+                .fail(function(res) {
+                    console.log(res);
+                    const errorMessage = 'Server error';
+                    $( "#server-error").append(errorMessage);
+
+                });
         }
     });
 
