@@ -8,7 +8,6 @@ class StaticController extends BasicController {
 
     link(router) {
         // Public routes
-        router.get(`${this.prefix}`, this.landing);
         router.get(`${this.prefix}/login`, this.login);
         router.get(`${this.prefix}/signup`, this.signup);
         router.get(`${this.prefix}/forgot-password`, this.forgotPassword);
@@ -27,6 +26,7 @@ class StaticController extends BasicController {
         router.get(`*`, this.pageNotFound);
 
         // Protected routes
+        router.get(`${this.prefix}`, this.ensureAuthenticated, this.landing);
         router.get(`${this.prefix}/dashboard`, this.ensureAuthenticated, this.dashboard);
         router.get(`${this.prefix}/blog`, this.ensureAuthenticated, this.blogArchive);
     }
