@@ -536,7 +536,7 @@
             console.log('requestData', requestData);
 
             // make a api request
-            $.post('/api/auth/login/', requestData)
+            $.post('/api/auth/login', requestData)
                 .done(function (res) {
                     console.log('res', res);
                 })
