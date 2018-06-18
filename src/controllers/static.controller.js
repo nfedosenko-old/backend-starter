@@ -13,6 +13,7 @@ class StaticController extends BasicController {
         router.get(`${this.prefix}/forgot-password`, this.forgotPassword);
         router.get(`${this.prefix}/check-email`, this.checkEmail);
         router.get(`${this.prefix}/account`, this.account);
+        router.get(`${this.prefix}/reset-password`, this.resetPassword);
         router.get(`${this.prefix}/404`, this.pageNotFound);
         router.get(`${this.prefix}/test`, (req, res) => {
             const ct = new SmartContractController();
@@ -22,13 +23,13 @@ class StaticController extends BasicController {
             res.json({});
         });
 
-        // Handler for invalid routes
-        router.get(`*`, this.pageNotFound);
-
         // Protected routes
         router.get(`${this.prefix}`, this.ensureAuthenticated, this.landing);
         router.get(`${this.prefix}/dashboard`, this.ensureAuthenticated, this.dashboard);
         router.get(`${this.prefix}/blog`, this.ensureAuthenticated, this.blogArchive);
+
+        // Handler for invalid routes
+        router.get(`*`, this.pageNotFound);
     }
 
     landing(req, res) {
@@ -73,6 +74,12 @@ class StaticController extends BasicController {
 
     account(req, res) {
         res.render('pages/account');
+    }
+
+    resetPassword(req, res) {
+        res.render('pages/reset-password', {
+            /* send data to view */
+        })
     }
 
     pageNotFound(req, res) {

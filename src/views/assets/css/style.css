@@ -400,6 +400,7 @@ hr:last-child, .hr:last-child { margin-bottom: 0; }
 
 .error {
   color: red;
+  font-weight: 600;
 }
 
 @media screen and (min-width: 1600px) { .section-pad { padding-top: 180px; padding-bottom: 180px; }

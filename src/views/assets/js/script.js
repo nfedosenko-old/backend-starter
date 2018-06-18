@@ -482,9 +482,9 @@
         submitHandler: function () {
             // build a json object, store in information to dataObject and get values from form
             const email = $("input[type=text][name=email]" ).val();
-            const password = $("input[type=password][name=password]" ).val();
-            const confirmPassword = $("input[type=password][name=password]" ).val();
-            const walletAddress = $("input[type=text][name=ethereumAdress]" ).val();
+            const password = $("input[type=password][name=password]").val();
+            const confirmPassword = $("input[type=password][name=password]").val();
+            const walletAddress = $("input[type=text][name=ethereumAdress]").val();
             const aggrement = $("input[type=checkbox][name=aggrement]:checked" ).is(':checked');
             const requestData = {
                 email,
@@ -499,12 +499,11 @@
             $.post('/api/auth/signup/', requestData)
 				.done(function (res) {
 					console.log('res', res);
+                    window.location.href = '/check-email';
                 })
 				.fail(function(res) {
-                    console.log(res);
-                    const errorMessage = 'Server error';
-                    $( "#server-error").append(errorMessage);
-
+                    const errorMessage = res.responseJSON.data.message || 'Server error';
+                    $( "#server-error").text(errorMessage);
                 });
         }
     });
@@ -527,8 +526,8 @@
         },
         submitHandler: function () {
             // build a json object, store in information to dataObject and get values from form
-            const email = $("input[type=text][name=email]" ).val();
-            const password = $("input[type=password][name=password]" ).val();
+            const email = $("input[type=text][name=email]").val();
+            const password = $("input[type=password][name=password]").val();
             const requestData = {
                 email,
                 password,
@@ -539,12 +538,11 @@
             $.post('/api/auth/login', requestData)
                 .done(function (res) {
                     console.log('res', res);
+                    // window.location.href = '/dashboard';
                 })
                 .fail(function(res) {
-                    console.log(res);
-                    const errorMessage = 'Server error';
-                    $( "#server-error").append(errorMessage);
-
+                    const errorMessage = res.responseJSON.data.message || 'Server error';
+                    $( "#server-error").text(errorMessage);
                 });
         }
     });
@@ -562,7 +560,7 @@
         },
         submitHandler: function () {
             // build a json object, store in information to dataObject and get values from form
-            const email = $("input[type=text][name=email]" ).val();
+            const email = $("input[type=text][name=email]").val();
             const requestData = {
                 email,
             };
@@ -572,12 +570,50 @@
             $.post('/api/auth/forgot-password/', requestData)
                 .done(function (res) {
                     console.log('res', res);
+                    window.location.href = '/check-email';
                 })
                 .fail(function(res) {
-                    console.log(res);
-                    const errorMessage = 'Server error';
-                    $( "#server-error").append(errorMessage);
+                    const errorMessage = res.responseJSON.data.message || 'Server error';
+                    $( "#server-error").text(errorMessage);
+                });
+        }
+    });
 
+    // reset password from form handler
+    $('#resetPassword').submit(function(e) {
+        e.preventDefault();
+    }).validate({ // initialize the plugin
+        rules: {
+            newPassword: {
+                required: true,
+                minlength: 5
+            },
+            confirmNewPassword: {
+                required: true,
+                minlength: 5,
+                equalTo: "#newPassword"
+            },
+        },
+        submitHandler: function () {
+        	// TODO: catch recovery token from url
+            // build a json object, store in information to dataObject and get values from form
+            const newPassword = $("input[type=password][name=newPassword]").val();
+            const confirmNewPassword = $("input[type=password][name=confirmNewPassword]").val();
+            const requestData = {
+                newPassword,
+				// TODO: add recovery token to request
+            };
+            console.log('requestData', requestData);
+
+            // make a api request
+            $.post('/api/auth/reset-password/', requestData)
+                .done(function (res) {
+                    console.log('res', res);
+                    window.location.href = '/login';
+                })
+                .fail(function(res) {
+                    const errorMessage = res.responseJSON.data.message || 'Server error';
+                    $( "#server-error").text(errorMessage);
                 });
         }
     });

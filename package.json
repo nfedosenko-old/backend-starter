@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "pm2 start ./env/ecosystem.config.js --env=development",
+    "start": "pm2 start ./env/ecosystem.config.js --env=development && npm run flush",
+    "flush": "pm2 flush",
     "stop": "pm2 stop --watch 0"
   },
   "author": "",
