@@ -1,6 +1,7 @@
 const ApiController = require('./api.controller');
 const {User} = require('../models');
 const passport = require('passport');
+const mailerClient = require('../utils/mailerClient');
 
 class AuthController extends ApiController {
     constructor(router) {
@@ -25,6 +26,7 @@ class AuthController extends ApiController {
             })(req, res);
         });
         router.post(`${this.prefix}/signup`, this.signup);
+        router.post(`${this.prefix}/forgot-password`, this.forgotPassword);
     }
 
     signup(req, res) {
@@ -41,6 +43,12 @@ class AuthController extends ApiController {
                 return res.status(200).json({success: true, data: createdUser});
             });
 
+    }
+
+    forgotPassword(req, res) {
+        const email = req.body.email;
+
+        mailerClient.emit('email:sendForgotPasswordMail', {email: email});
     }
 }
 
