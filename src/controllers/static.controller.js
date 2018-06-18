@@ -8,11 +8,11 @@ class StaticController extends BasicController {
 
     link(router) {
         // Public routes
-        router.get(`${this.prefix}`, this.landing);
         router.get(`${this.prefix}/login`, this.login);
         router.get(`${this.prefix}/signup`, this.signup);
         router.get(`${this.prefix}/forgot-password`, this.forgotPassword);
         router.get(`${this.prefix}/check-email`, this.checkEmail);
+        router.get(`${this.prefix}/account`, this.account);
         router.get(`${this.prefix}/404`, this.pageNotFound);
         router.get(`${this.prefix}/test`, (req, res) => {
             const ct = new SmartContractController();
@@ -26,6 +26,7 @@ class StaticController extends BasicController {
         router.get(`*`, this.pageNotFound);
 
         // Protected routes
+        router.get(`${this.prefix}`, this.ensureAuthenticated, this.landing);
         router.get(`${this.prefix}/dashboard`, this.ensureAuthenticated, this.dashboard);
         router.get(`${this.prefix}/blog`, this.ensureAuthenticated, this.blogArchive);
     }
@@ -68,6 +69,10 @@ class StaticController extends BasicController {
 
     checkEmail(req, res) {
         res.render('pages/check-email')
+    }
+
+    account(req, res) {
+        res.render('pages/account');
     }
 
     pageNotFound(req, res) {
