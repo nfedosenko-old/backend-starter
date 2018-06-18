@@ -1,5 +1,4 @@
 const controllers = [
-    require('./user.controller'),
     require('./static.controller'),
     require('./auth.controller')
 ];
