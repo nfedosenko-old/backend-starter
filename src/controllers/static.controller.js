@@ -14,6 +14,7 @@ class StaticController extends BasicController {
         router.get(`${this.prefix}/check-email`, this.checkEmail);
         router.get(`${this.prefix}/account`, this.account);
         router.get(`${this.prefix}/reset-password`, this.resetPassword);
+        router.get(`${this.prefix}/`, this.landing);
         router.get(`${this.prefix}/404`, this.pageNotFound);
         router.get(`${this.prefix}/test`, (req, res) => {
             const ct = new SmartContractController();
@@ -24,7 +25,6 @@ class StaticController extends BasicController {
         });
 
         // Protected routes
-        router.get(`${this.prefix}`, this.ensureAuthenticated, this.landing);
         router.get(`${this.prefix}/dashboard`, this.ensureAuthenticated, this.dashboard);
         router.get(`${this.prefix}/blog`, this.ensureAuthenticated, this.blogArchive);
 
@@ -33,19 +33,21 @@ class StaticController extends BasicController {
     }
 
     landing(req, res) {
-        res.render('pages/landing', {
+        const isAuthorized = req.isAuthenticated();
+        res.render('pages/landing2', {
             /* send data to view */
+            isAuthorized,
         });
     }
 
     login(req, res) {
-        res.render('pages/login', {
+        res.render('pages/login2', {
             /* send data to view */
         });
     }
 
     signup(req, res) {
-        res.render('pages/signup', {
+        res.render('pages/signup2', {
             /* send data to view */
         });
     }
@@ -63,7 +65,7 @@ class StaticController extends BasicController {
     }
 
     forgotPassword(req, res) {
-        res.render('pages/forgot-password', {
+        res.render('pages/forgot-password2', {
             /* send data to view */
         })
     }
