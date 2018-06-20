@@ -34,20 +34,20 @@ class StaticController extends BasicController {
 
     landing(req, res) {
         const isAuthorized = req.isAuthenticated();
-        res.render('pages/landing2', {
+        res.render('pages/landing', {
             /* send data to view */
             isAuthorized,
         });
     }
 
     login(req, res) {
-        res.render('pages/login2', {
+        res.render('pages/login', {
             /* send data to view */
         });
     }
 
     signup(req, res) {
-        res.render('pages/signup2', {
+        res.render('pages/signup', {
             /* send data to view */
         });
     }
@@ -65,7 +65,7 @@ class StaticController extends BasicController {
     }
 
     forgotPassword(req, res) {
-        res.render('pages/forgot-password2', {
+        res.render('pages/forgot-password', {
             /* send data to view */
         })
     }
