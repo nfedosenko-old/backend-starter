@@ -53,7 +53,7 @@
                       <li class="nav-item"><a class="nav-link menu-link" href="account">Account</a></li>
                     <% }; %>
                 </ul>
-                <% if (isAuthorized) { %>
+                <% if (!isAuthorized) { %>
                     <ul class="navbar-nav navbar-btns animated remove-animation" data-animate="fadeInDown" data-delay="1.15">
                         <li class="nav-item"><a class="nav-link btn btn-sm btn-outline menu-link" href="signup">Sign up</a></li>
                         <li class="nav-item"><a class="nav-link btn btn-sm btn-outline menu-link" href="login">Log in</a></li>
