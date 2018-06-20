@@ -538,6 +538,7 @@
     $('#loginForm').submit(function (e) {
         e.preventDefault();
     }).validate({ // initialize the plugin
+        ignore: ".ignore",
         rules: {
             emailOrUsername: {
                 required: true,
@@ -547,6 +548,15 @@
                 required: true,
                 minlength: 5
             },
+            hiddenRecaptcha: {
+                required: function () {
+                    if (grecaptcha.getResponse() == '') {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
         },
         submitHandler: function () {
             // build a json object, store in information to dataObject and get values from form
