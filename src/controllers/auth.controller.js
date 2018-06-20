@@ -9,21 +9,27 @@ class AuthController extends ApiController {
     }
 
     link(router) {
-        router.post(`${this.prefix}/login`, (req, res) => {
+        router.post(`${this.prefix}/login`, (req, res, next) => {
             passport.authenticate('local', (err, user, info) => {
                 if (err) {
-                    return res.status(500).send();
+                    return next(err);
                 }
 
                 if (!user && info) {
                     return res.status(422).send(info);
                 }
 
-                return res.status(200).json({
-                    success: true,
-                    data: user
+                return req.logIn(user, (error) => {
+                    if (error) {
+                        return next(error);
+                    }
+
+                    return res.status(200).json({
+                        success: true,
+                        data: user
+                    });
                 });
-            })(req, res);
+            })(req, res, next);
         });
         router.post(`${this.prefix}/signup`, this.signup);
         router.post(`${this.prefix}/forgot-password`, this.forgotPassword);

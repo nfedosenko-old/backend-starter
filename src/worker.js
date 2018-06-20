@@ -28,7 +28,7 @@ app.use('/', router);
  */
 
 db
-    .sync({force: true})
+    .sync()
     .then(() => {
 
         app.listen(process.env.PORT, () => {
