@@ -506,10 +506,10 @@
         submitHandler: function () {
             // build a json object, store in information to dataObject and get values from form
             const username = $("input[type=text][name=username]").val();
-            const email = $("input[type=text][name=email]").val();
+            const email = $("input[type=email][name=email]").val();
             const password = $("input[type=password][name=password]").val();
-            const confirmPassword = $("input[type=password][name=password]").val();
-            const walletAddress = $("input[type=text][name=ethereumAdress]").val();
+            // const confirmPassword = $("input[type=password][name=password]").val();
+            const walletAddress = $("input[type=text][name=walletAddress]").val();
             // const aggrement = $("input[type=checkbox][name=aggrement]:checked").is(':checked');
             const requestData = {
                 username,
