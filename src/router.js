@@ -5,8 +5,4 @@ const router = Router();
 
 controllers(router);
 
-router.get('/', (req, res) => {
-    res.sendFile('./dist/index.html');
-});
-
 module.exports = router;
