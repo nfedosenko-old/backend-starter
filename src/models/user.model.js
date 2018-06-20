@@ -14,6 +14,14 @@ module.exports = (db, Sequelize) => {
                 isEmail: true
             }
         },
+        username: {
+            type: Sequelize.DataTypes.STRING,
+            allowNull: false
+        },
+        walletAddress: {
+            type: Sequelize.DataTypes.STRING,
+            allowNull: false
+        },
         password: {
             type: Sequelize.DataTypes.STRING,
             allowNull: false
@@ -53,6 +61,10 @@ module.exports = (db, Sequelize) => {
     UserModel.prototype.validatePassword = function (password) {
         return bcrypt.compareSync(password, this.password);
     };
+
+    UserModel.hook('beforeUpdate', (user, options) => {
+        console.log('CHANGED', user.changed());
+    });
 
     UserModel.hook('beforeCreate', (user, options) => {
         return Promise.all([

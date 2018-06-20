@@ -4,13 +4,20 @@ const {User} = require('../models');
 
 module.exports = () => {
     passport.use('local', new LocalStrategy({
-        usernameField: 'email',
+        usernameField: 'emailOrUsername',
         passwordField: 'password',
         passReqToCallback: true
-    }, (req, email, password, done) => {
+    }, (req, emailOrUsername, password, done) => {
         User.findOne({
             where: {
-                email: email
+                $or: [
+                    {
+                        email: emailOrUsername
+                    },
+                    {
+                        username: emailOrUsername
+                    }
+                ]
             }
         }).then((user) => {
             if (!user) {
@@ -31,19 +38,15 @@ module.exports = () => {
                 });
             }
 
-            console.log(user.get());
-
             return done(null, user.get());
         });
     }));
 
     passport.serializeUser((user, done) => {
-        console.log('serializeUser', user);
         done(null, user.id);
     });
 
     passport.deserializeUser((id, done) => {
-        console.log('deserializeUser', id);
         User.findById(id).then((user) => {
             if (user) {
                 done(null, user.get());
