@@ -3,20 +3,6 @@ const LocalStrategy = require('passport-local');
 const {User} = require('../models');
 
 module.exports = () => {
-    passport.serializeUser((user, done) => {
-        done(null, user.id);
-    });
-
-    passport.deserializeUser((id, done) => {
-        User.findById(id).then((user) => {
-            if (user) {
-                done(null, user.get());
-            } else {
-                done(user.errors, null);
-            }
-        });
-    });
-
     passport.use('local', new LocalStrategy({
         usernameField: 'email',
         passwordField: 'password',
@@ -45,7 +31,25 @@ module.exports = () => {
                 });
             }
 
+            console.log(user.get());
+
             return done(null, user.get());
         });
     }));
+
+    passport.serializeUser((user, done) => {
+        console.log('serializeUser', user);
+        done(null, user.id);
+    });
+
+    passport.deserializeUser((id, done) => {
+        console.log('deserializeUser', id);
+        User.findById(id).then((user) => {
+            if (user) {
+                done(null, user.get());
+            } else {
+                done(user.errors, null);
+            }
+        });
+    });
 };

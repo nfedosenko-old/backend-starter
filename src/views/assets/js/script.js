@@ -557,8 +557,8 @@
             // make a api request
             $.post('/api/auth/login', requestData)
                 .done(function (res) {
-                    console.log('res', res);
-                    // window.location.href = '/dashboard';
+                    console.log('res2', res);
+                    window.location.href = '/dashboard';
                 })
                 .fail(function (res) {
                     const errorMessage = res.responseJSON.data.message || 'Server error';
