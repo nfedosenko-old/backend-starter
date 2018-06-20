@@ -1,7 +1,7 @@
 const ApiController = require('./api.controller');
 const {User} = require('../models');
 const passport = require('passport');
-const mailerClient = require('../utils/mailerClient');
+let {getConfirmEmailMailOptions, mailerClient} = require('../utils/mailerClient');
 
 class AuthController extends ApiController {
     constructor(router) {
@@ -48,7 +48,13 @@ class AuthController extends ApiController {
     forgotPassword(req, res) {
         const email = req.body.email;
 
-        mailerClient.emit('email:sendForgotPasswordMail', {email: email});
+        mailerClient.emit('email:send', getConfirmEmailMailOptions(email), (err, result) => {
+            if (err) {
+                return res.json({success: false, data: err});
+            } else {
+                return res.json({success: true, data: result});
+            }
+        });
     }
 }
 

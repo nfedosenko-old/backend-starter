@@ -6,4 +6,24 @@ socket.on('disconnect', () => {
     socket.open();
 });
 
-module.exports = socket;
+exports.getForgotPasswordMailOptions = (email) => {
+    return {
+        to: email,
+        from: 'Support',
+        sender: 'Subbport',
+        subject: 'Kek',
+        viewUrl: 'forgot-password'
+    };
+};
+
+exports.getConfirmEmailMailOptions = (email) => {
+    return {
+        to: email,
+        from: 'Support',
+        sender: 'Subbport',
+        subject: 'Kek',
+        viewUrl: 'confirm-email'
+    };
+};
+
+exports.mailerClient = socket;

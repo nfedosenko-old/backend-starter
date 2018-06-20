@@ -22,13 +22,13 @@ class StaticController extends BasicController {
             res.json({});
         });
 
-        // Handler for invalid routes
-        router.get(`*`, this.pageNotFound);
-
         // Protected routes
         router.get(`${this.prefix}`, this.ensureAuthenticated, this.landing);
         router.get(`${this.prefix}/dashboard`, this.ensureAuthenticated, this.dashboard);
         router.get(`${this.prefix}/blog`, this.ensureAuthenticated, this.blogArchive);
+
+        // Handler for invalid routes
+        router.get(`*`, this.pageNotFound);
     }
 
     landing(req, res) {

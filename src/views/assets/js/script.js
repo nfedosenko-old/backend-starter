@@ -493,17 +493,18 @@
                 walletAddress,
                 aggrement
             };
-            console.log('requestData', requestData);
+            console.log('requestData12', requestData);
 
             // make a api request
             $.post('/api/auth/signup/', requestData)
 				.done(function (res) {
 					console.log('res', res);
+					window.location.replace('/dashboard');
                 })
 				.fail(function(res) {
                     console.log(res);
-                    const errorMessage = 'Server error';
-                    $( "#server-error").append(errorMessage);
+                    const errorMessage = res.responseJSON.data.message;
+                    $( "#server-error").val(errorMessage);
 
                 });
         }
