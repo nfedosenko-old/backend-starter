@@ -14,6 +14,7 @@ class StaticController extends BasicController {
         router.get(`${this.prefix}/check-email`, this.checkEmail);
         router.get(`${this.prefix}/account`, this.account);
         router.get(`${this.prefix}/reset-password`, this.resetPassword);
+        router.get(`${this.prefix}/`, this.landing);
         router.get(`${this.prefix}/404`, this.pageNotFound);
         router.get(`${this.prefix}/test`, (req, res) => {
             const ct = new SmartContractController();
@@ -24,7 +25,6 @@ class StaticController extends BasicController {
         });
 
         // Protected routes
-        router.get(`${this.prefix}`, this.landing);
         router.get(`${this.prefix}/dashboard`, this.ensureAuthenticated, this.dashboard);
         router.get(`${this.prefix}/blog`, this.ensureAuthenticated, this.blogArchive);
 
@@ -33,8 +33,10 @@ class StaticController extends BasicController {
     }
 
     landing(req, res) {
+        const isAuthorized = req.isAuthenticated();
         res.render('pages/landing', {
             /* send data to view */
+            isAuthorized,
         });
     }
 

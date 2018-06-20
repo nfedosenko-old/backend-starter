@@ -2360,7 +2360,7 @@ select:focus { outline: none; border: none; }
 
 .input-checkbox, .input-radio { position: absolute; opacity: 0; }
 .input-checkbox + label, .input-radio + label { font-size: 0.81em; color: #9b9fe0; padding: 5px 0 5px 24px; position: relative; cursor: pointer; }
-.input-checkbox + label:before, .input-radio + label:before { position: absolute; left: 0; top: 9px; content: ''; height: 14px; width: 14px; border-radius: 2px; border: 1px solid rgba(235, 242, 255, 0.6); }
+.input-checkbox + label:before, .input-radio + label:before { position: absolute; left: 0; top: 9px; content: ''; height: 14px; width: 14px; border-radius: 2px; border: 1px solid #9b9fe0; }
 .input-checkbox + label:after, .input-radio + label:after { position: absolute; left: 0; top: 9px; font-family: themify; content: "\e64c"; font-weight: 700; height: 14px; width: 14px; font-size: 8px; text-align: center; opacity: 0; transition: all .4s; }
 .input-checkbox:checked + label:after, .input-radio:checked + label:after { opacity: 1; }
 .input-radio + label:before { border-radius: 7px; }
