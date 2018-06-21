@@ -475,9 +475,10 @@
     // sign up form handler
     $('#signUpForm').submit(function (e) {
         e.preventDefault();
-    }).validate({ // initialize the plugin
+    }).validate({
+        ignore: ".ignore",
         rules: {
-            name: {
+            username: {
                 required: true,
                 minlength: 5,
             },
@@ -501,6 +502,11 @@
             },
             aggrement: {
                 // required: true,
+            },
+            hiddenRecaptcha: {
+                required: function () {
+                    return grecaptcha.getResponse() === '';
+                }
             }
         },
         submitHandler: function () {
@@ -547,15 +553,6 @@
             password: {
                 required: true,
                 minlength: 5
-            },
-            hiddenRecaptcha: {
-                required: function () {
-                    if (grecaptcha.getResponse() == '') {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
             }
         },
         submitHandler: function () {

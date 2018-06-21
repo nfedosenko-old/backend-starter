@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="author" content="Softnio">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="ICO Crypto is a modern and elegant landing page, created for ICO Agencies and digital crypto currency investment website.">
+    <meta name="description"
+          content="ICO Crypto is a modern and elegant landing page, created for ICO Agencies and digital crypto currency investment website.">
     <!-- Fav Icon  -->
     <link rel="shortcut icon" href="images/favicon.png">
     <!-- Site Title  -->
@@ -14,7 +15,6 @@
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="assets/css/style.css?ver=124">
     <link rel="stylesheet" href="assets/css/theme.css?ver=124">
-
 </head>
 
 <body class="theme-dark io-azure io-light-pro" data-spy="scroll" data-target="#mainnav" data-offset="80">
@@ -29,7 +29,8 @@
                             <div class="user-pro-info">
                                 <div class="user-logo">
                                     <a href="#">
-                                        <img src="images/extra-pages/logo-sm-white.png"  srcset="images/extra-pages/logo-sm-white2x.png 2x" alt="icon">
+                                        <img src="images/extra-pages/logo-sm-white.png"
+                                             srcset="images/extra-pages/logo-sm-white2x.png 2x" alt="icon">
                                     </a>
                                 </div>
                                 <div class="user-graphics">
@@ -45,33 +46,52 @@
                                         <span class="form-heading">Create an account to Join ICO Crypto community and buy ICOX Token.</span>
                                         <form class="signup-form" id="signUpForm">
                                             <div class="input-item">
-                                                <input type="text" name="username" placeholder="Your Name" class="input-border-simple">
+                                                <input type="text" name="username" placeholder="Username"
+                                                       class="input-border-simple">
                                                 <em class="fas fa-user"></em>
                                             </div>
                                             <div class="input-item">
-                                                <input type="email" name="email" placeholder="Your Email" class="input-border-simple">
+                                                <input type="email" name="email" placeholder="Your Email"
+                                                       class="input-border-simple">
                                                 <em class="fas fa-envelope"></em>
                                             </div>
                                             <div class="input-item">
-                                                <input type="text" name="walletAddress" placeholder="Wallet Address" class="input-border-simple">
+                                                <input type="text" name="walletAddress" placeholder="Wallet Address"
+                                                       class="input-border-simple">
                                                 <em class="fas fa-wallet"></em>
                                             </div>
                                             <div class="input-item">
-                                                <input type="password" name="password" id="password" placeholder="Password" class="input-border-simple">
+                                                <input type="password" name="password" id="password"
+                                                       placeholder="Password" class="input-border-simple">
                                                 <em class="fas fa-key"></em>
                                             </div>
                                             <div class="input-item">
-                                                <input type="password" name="passwordConfirm" placeholder="Repeat Password" class="input-border-simple">
+                                                <input type="password" name="passwordConfirm"
+                                                       placeholder="Repeat Password" class="input-border-simple">
                                                 <em class="fas fa-key"></em>
                                             </div>
+                                            <div class="input-item">
+                                                <div class="g-recaptcha"
+                                                     data-callback="onCaptchaResponse"
+                                                     data-sitekey="6Ld1H2AUAAAAAHTyyhkiNlJdTCR_d0EzuuKoCR09">
+                                                </div>
+                                                <input class="hiddenRecaptcha required"
+                                                       type="hidden"
+                                                       name="hiddenRecaptcha"
+                                                       id="hiddenRecaptcha">
+                                            </div>
                                             <div class="input-item text-left">
-                                                <input name="aggrement" type="checkbox" id="aggrement" class="input-checkbox">
-                                                <label for="aggrement">I confrim that I have read, understand and agree to the <a href="#">Privacy Policy</a> and <a href="#">Terms of Use</a>.</label>
+                                                <input name="aggrement" type="checkbox" id="aggrement"
+                                                       class="input-checkbox">
+                                                <label for="aggrement">I confrim that I have read, understand and agree
+                                                    to the <a href="#">Privacy Policy</a> and <a href="#">Terms of
+                                                        Use</a>.</label>
                                             </div>
                                             <div class="d-xl-flex justify-content-between align-items-center">
                                                 <button class="btn btn-sm">Sign Up</button>
                                                 <div class="gaps d-xl-none"></div>
-                                                <span class="d-block">Don`t have an account? <a href="login" class="simple-link">Sign in!</a></span>
+                                                <span class="d-block">Don`t have an account? <a href="login"
+                                                                                                class="simple-link">Sign in!</a></span>
                                             </div>
                                         </form>
                                     </div>
@@ -103,6 +123,11 @@
 <!-- JavaScript (include all script here) -->
 <script src="assets/js/jquery.bundle.js?ver=124"></script>
 <script src="assets/js/script.js?ver=124"></script>
-
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<script>
+    function onCaptchaResponse(response) {
+        $('#signUpForm').validate().element('#hiddenRecaptcha');
+    }
+</script>
 </body>
 </html>
