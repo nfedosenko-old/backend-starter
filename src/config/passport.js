@@ -1,6 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const {User} = require('../models');
+const validateEmail = require('../utils/validateEmail');
 
 module.exports = () => {
     passport.use('local', new LocalStrategy({
@@ -8,18 +9,13 @@ module.exports = () => {
         passwordField: 'password',
         passReqToCallback: true
     }, (req, emailOrUsername, password, done) => {
-        User.findOne({
-            where: {
-                $or: [
-                    {
-                        email: emailOrUsername
-                    },
-                    {
-                        username: emailOrUsername
-                    }
-                ]
-            }
-        }).then((user) => {
+        const searchQuery = validateEmail(emailOrUsername) ? {
+            email: emailOrUsername
+        } : {
+            username: emailOrUsername
+        };
+
+        User.findOne(searchQuery).then((user) => {
             if (!user) {
                 return done(null, false, {
                     success: false,
