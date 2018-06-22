@@ -534,7 +534,9 @@
                 })
                 .fail(function (res) {
                     const errorMessage = res.responseJSON.data.message || 'Server error';
-                    $("#server-error").text(errorMessage);
+                    $("#server-error").html(`<div class="alert alert-danger" role="alert">
+                                                                     <strong id="server-error">${errorMessage}</strong>
+                                                                   </div>`);
                 });
         }
     });
@@ -573,7 +575,10 @@
                 })
                 .fail(function (res) {
                     const errorMessage = res.responseJSON.data.message || 'Server error';
-                    $("#server-error").text(errorMessage);
+                    // $("#server-error").text(errorMessage);
+                    $("#server-error").html(`<div class="alert alert-danger" role="alert">
+                                                                     <strong id="server-error">${errorMessage}</strong>
+                                                                   </div>`);
                 });
         }
     });
