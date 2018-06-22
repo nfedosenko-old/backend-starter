@@ -1,18 +1,21 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const {User} = require('../models');
+const validateEmail = require('../utils/validateEmail');
 
 module.exports = () => {
     passport.use('local', new LocalStrategy({
-        usernameField: 'email',
+        usernameField: 'emailOrUsername',
         passwordField: 'password',
         passReqToCallback: true
-    }, (req, email, password, done) => {
-        User.findOne({
-            where: {
-                email: email
-            }
-        }).then((user) => {
+    }, (req, emailOrUsername, password, done) => {
+        const searchQuery = validateEmail(emailOrUsername) ? {
+            email: emailOrUsername
+        } : {
+            username: emailOrUsername
+        };
+
+        User.findOne(searchQuery).then((user) => {
             if (!user) {
                 return done(null, false, {
                     success: false,
@@ -31,19 +34,15 @@ module.exports = () => {
                 });
             }
 
-            console.log(user.get());
-
             return done(null, user.get());
         });
     }));
 
     passport.serializeUser((user, done) => {
-        console.log('serializeUser', user);
         done(null, user.id);
     });
 
     passport.deserializeUser((id, done) => {
-        console.log('deserializeUser', id);
         User.findById(id).then((user) => {
             if (user) {
                 done(null, user.get());
