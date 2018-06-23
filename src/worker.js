@@ -28,6 +28,7 @@ app.use('/', router);
  */
 
 db
+    // .sync({force: true}
     .sync()
     .then(() => {
 
