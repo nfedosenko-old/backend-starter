@@ -571,7 +571,7 @@
             $.post('/api/auth/login', requestData)
                 .done(function (res) {
                     console.log('res2', res);
-                    window.location.href = '/dashboard';
+                    window.location.href = '/';
                 })
                 .fail(function (res) {
                     const errorMessage = res.responseJSON.data.message || 'Server error';

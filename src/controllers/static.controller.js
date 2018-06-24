@@ -88,6 +88,13 @@ class StaticController extends BasicController {
         })
     }
 
+    resetPassword(req, res) {
+        res.render('pages/reset-password', {
+            /* send data to view */
+        })
+    }
+
+
     pageNotFound(req, res) {
         res.render('pages/404', {
             /* send data to view */
