@@ -8,60 +8,108 @@
     <!-- Fav Icon  -->
     <link rel="shortcut icon" href="images/favicon.png">
     <!-- Site Title  -->
-    <title>ICO Crypto - Bitcoin &amp; Cryptocurrency Account</title>
+    <title>ICO Crypto - Bitcoin &amp; Cryptocurrency Landing Page Template</title>
     <!-- Vendor Bundle CSS -->
     <link rel="stylesheet" href="assets/css/vendor.bundle.css?ver=124">
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="assets/css/style.css?ver=124">
-    <link rel="stylesheet" href="assets/css/theme.css?ver=124">
+    <link rel="stylesheet" href="assets/css/theme-java.css?ver=124">
 
 </head>
 
-<body class="theme-light" data-spy="scroll" data-target="#mainnav" data-offset="80">
+<body class="theme-dark io-azure io-azure-pro" data-spy="scroll" data-target="#mainnav" data-offset="80">
 
-<div class="user-page d-flex align-items-center">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-8 col-sm-8 text-center">
-                <div class="user-page-box">
-                    <div class="user-logo">
-                        <a href="#">
-                            <img src="images/extra-pages/logo-sm.png"  srcset="images/extra-pages/logo-sm2x.png 2x" alt="icon">
-                        </a>
+<!-- Header -->
+<header class="site-header is-sticky">
+
+    <!-- Place Particle Js -->
+    <div id="particles-js" class="particles-container particles-js"></div>
+
+    <!-- Navbar -->
+    <div class="navbar navbar-expand-lg is-transparent" id="mainnav">
+        <nav class="container">
+
+            <a class="navbar-brand animated" data-animate="fadeInDown" data-delay=".65" href="./">
+                <img class="logo logo-dark" alt="logo" src="images/logo.png" srcset="images/logo2x.png 2x">
+                <img class="logo logo-light" alt="logo" src="images/logo-white.png" srcset="images/logo-white2x.png 2x">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle">
+					<span class="navbar-toggler-icon">
+						<span class="ti ti-align-justify"></span>
+					</span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarToggle">
+                <ul class="navbar-nav animated remove-animation" data-animate="fadeInDown" data-delay=".9">
+                    <li class="nav-item"><a class="nav-link menu-link" href="#intro">What is ICO<span class="sr-only">(current)</span></a></li>
+                    <li class="nav-item"><a class="nav-link menu-link" href="#tokenSale">Token Sale</a></li>
+                    <li class="nav-item"><a class="nav-link menu-link" href="#roadmap">Roadmap</a></li>
+                    <li class="nav-item"><a class="nav-link menu-link" href="#apps">Apps</a></li>
+                    <li class="nav-item"><a class="nav-link menu-link" href="#team">Team</a></li>
+                    <li class="nav-item"><a class="nav-link menu-link" href="#faq">Faq</a></li>
+                    <li class="nav-item"><a class="nav-link menu-link" href="#contact">Contact</a></li>
+                    <% if (isAuthorized) { %>
+                    <li class="nav-item"><a class="nav-link menu-link" href="account">Account</a></li>
+                    <% }; %>
+                </ul>
+                <% if (!isAuthorized) { %>
+                <ul class="navbar-nav navbar-btns animated remove-animation" data-animate="fadeInDown" data-delay="1.15">
+                    <li class="nav-item"><a class="nav-link btn btn-sm btn-outline menu-link" href="signup">Sign up</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-sm btn-outline menu-link" href="login">Log in</a></li>
+                </ul>
+                <% }; %>
+            </div>
+
+        </nav>
+    </div>
+    <!-- End Navbar -->
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7 col-md-10 col-sm-10 text-center">
+                    <div class="account-form-wrapper">
+                        <div class="user-page-box">
+                            <div class="user-logo">
+                                <a href="#">
+                                    <img src="images/extra-pages/logo-sm.png"  srcset="images/extra-pages/logo-sm2x.png 2x" alt="icon">
+                                </a>
+                            </div>
+                            <h5>Your account</h5>
+                            <span class="small-heading">Your account data</span>
+                            <div id="server-error" class="error"></div>
+                            <form id="accountForm" class="login-form">
+                                <div class="input-item">
+                                    <label class="input-title left">Email</label>
+                                    <input name="email" type="text" placeholder="Your Email" class="input-line-simple" disabled>
+                                </div>
+                                <div class="input-item">
+                                    <label class="input-title al-left">Wallet Address</label>
+                                    <input name="walletAddress" type="text" placeholder="Wallet Address" class="input-line-simple" disabled>
+                                </div>
+                                <div class="input-item">
+                                    <label class="input-title">Old Password</label>
+                                    <input name="oldPassword" type="password" id="password" placeholder="Old Password" class="input-line-simple">
+                                </div>
+                                <div class="input-item">
+                                    <label class="input-title">New Password</label>
+                                    <input name="newPassword" type="password" placeholder="New Password" class="input-line-simple">
+                                </div>
+                                <div class="input-item">
+                                    <label class="input-title">Balance</label>
+
+                                    <input name="balance" type="text" value="0.00$" class="input-line-simple" disabled>
+                                </div>
+                                <div class="align-items-center">
+                                    <button class="btn btn-sm btn-center" type="submit">Update</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <h5>Your account</h5>
-                    <span class="small-heading">Your account data</span>
-                    <div id="server-error" class="error"></div>
-                    <form id="accountForm" class="login-form">
-                        <div class="input-item">
-                            <label class="input-title left">Email</label>
-                            <input name="email" type="text" placeholder="Your Email" class="input-line-simple" disabled>
-                        </div>
-                        <div class="input-item">
-                            <label class="input-title al-left">Wallet Address</label>
-                            <input name="walletAddress" type="text" placeholder="Wallet Address" class="input-line-simple" disabled>
-                        </div>
-                        <div class="input-item">
-                            <label class="input-title">Old Password</label>
-                            <input name="oldPassword" type="password" id="password" placeholder="Old Password" class="input-line-simple">
-                        </div>
-                        <div class="input-item">
-                            <label class="input-title">New Password</label>
-                            <input name="newPassword" type="password" placeholder="New Password" class="input-line-simple">
-                        </div>
-                        <div class="input-item">
-                            <label class="input-title">Balance</label>
-                            <input name="balance" type="text" value="0.00$" class="input-line-simple" disabled>
-                        </div>
-                        <div class="align-items-center">
-                            <button class="btn btn-sm btn-center" type="submit">Update</button>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+
 <!-- Preloader !remove please if you do not want -->
 <div id="preloader">
     <div id="loader"></div>
@@ -72,7 +120,6 @@
 
 <!-- JavaScript (include all script here) -->
 <script src="assets/js/jquery.bundle.js?ver=124"></script>
-<script src="assets/js/vendor/jquery.validate.min.js"></script>
 <script src="assets/js/script.js?ver=124"></script>
 
 </body>

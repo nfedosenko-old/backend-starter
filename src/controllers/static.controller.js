@@ -75,7 +75,11 @@ class StaticController extends BasicController {
     }
 
     account(req, res) {
-        res.render('pages/account');
+        const isAuthorized = req.isAuthenticated();
+        res.render('pages/account', {
+            /* send data to view */
+            isAuthorized
+        });
     }
 
     resetPassword(req, res) {
