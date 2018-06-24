@@ -1,7 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const {User} = require('../models');
-const validateEmail = require('../utils/validateEmail');
+const {validateEmail} = require('../utils/helpers');
 
 module.exports = () => {
     passport.use('local', new LocalStrategy({
@@ -15,7 +15,9 @@ module.exports = () => {
             username: emailOrUsername
         };
 
-        User.findOne(searchQuery).then((user) => {
+        User.findOne({
+            where: searchQuery
+        }).then((user) => {
             if (!user) {
                 return done(null, false, {
                     success: false,

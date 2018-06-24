@@ -1,7 +1,10 @@
 const ApiController = require('./api.controller');
 const {User} = require('../models');
 const passport = require('passport');
-let {getConfirmEmailMailOptions, mailerClient} = require('../utils/mailerClient');
+const Promise = require('bluebird');
+const {findUserByEmail, findUserByProperty} = require('../utils/selectors');
+const {generateToken} = require('../utils/helpers');
+const {getConfirmEmailMailOptions, getForgotPasswordMailOptions, mailerClient} = require('../utils/mailerClient');
 
 class AuthController extends ApiController {
     constructor(router) {
@@ -34,6 +37,8 @@ class AuthController extends ApiController {
         router.post(`${this.prefix}/signup`, this.signup);
         router.post(`${this.prefix}/forgot-password`, this.forgotPassword);
         router.post(`${this.prefix}/reset-password`, this.resetPassword);
+        router.post(`${this.prefix}/confirm-email`, this.confirmEmail);
+        router.post(`${this.prefix}/logout`, this.logout);
     }
 
     signup(req, res) {
@@ -45,15 +50,15 @@ class AuthController extends ApiController {
         User.create({email: email, password: password, walletAddress: walletAddress, username: username})
             .then(() => User.findOrCreate({where: {email: email}}))
             .spread((user, created) => {
-                const createdUser = user.get({
-                    plain: true
+                user.updateAttributes({
+                    confirmationToken: generateToken(32, 'hex')
                 });
 
                 mailerClient.emit('email:send', getConfirmEmailMailOptions(email), (err, result) => {
                     if (err) {
                         return res.json({success: false, data: err});
                     } else {
-                        return res.status(200).json({success: true, data: createdUser});
+                        return res.status(200).json({success: true, data: user.get()});
                     }
                 });
 
@@ -64,44 +69,79 @@ class AuthController extends ApiController {
     forgotPassword(req, res) {
         const email = req.body.email;
 
+        Promise
+            .all([findUserByEmail(email), generateToken(32, 'hex')])
+            .then(([user, resetPasswordToken]) => {
+                if (!user) {
+                    return res.status(404).json({
+                        success: false, data: {
+                            message: 'There is no user with such email'
+                        }
+                    });
+                } else {
+                    user.updateAttributes({
+                        resetPasswordToken: resetPasswordToken
+                    });
 
-
-
-        mailerClient.emit('email:send', getConfirmEmailMailOptions(email), (err, result) => {
-            if (err) {
-                return res.json({success: false, data: err});
-            } else {
-                return res.json({success: true, data: result});
-            }
-        });
+                    mailerClient.emit('email:send', getForgotPasswordMailOptions(email, {resetPasswordToken}), (err, result) => {
+                        if (err) {
+                            return res.json({success: false, data: err});
+                        } else {
+                            return res.json({success: true, data: result});
+                        }
+                    });
+                }
+            });
     }
 
     resetPassword(req, res) {
         const resetPasswordToken = req.body.resetPasswordToken;
         const newPassword = req.body.password;
 
-        User.findOne({
-            where: {
-                resetPasswordToken: resetPasswordToken
-            }
-        }).then(user => {
-            if (!user) {
-                return res.status(404).json({
-                    success: false, data: {
-                        message: 'Token seems to be invalid'
-                    }
-                });
-            } else {
-                user.updateAttributes({
-                    resetPasswordToken: null,
-                    password: newPassword
-                });
-            }
-        });
+        findUserByProperty('resetPasswordToken', resetPasswordToken)
+            .then(user => {
+                if (!user) {
+                    return res.status(404).json({
+                        success: false, data: {
+                            message: 'Token seems to be invalid'
+                        }
+                    });
+                } else {
+                    user.updateAttributes({
+                        resetPasswordToken: null,
+                        password: newPassword
+                    });
+
+                    res.status(200).json({success: true, data: {message: 'Password has been updated successfully'}});
+                }
+            });
     }
 
     confirmEmail(req, res) {
+        const confirmationToken = req.body.confirmationToken;
 
+        findUserByProperty('confirmationToken', confirmationToken)
+            .then(user => {
+                if (!user) {
+                    return res.status(404).json({
+                        success: false, data: {
+                            message: 'Token seems to be invalid'
+                        }
+                    });
+                } else {
+                    user.updateAttributes({
+                        confirmed: true,
+                        confirmationToken: null
+                    });
+
+                    res.status(200).json({success: true, data: {message: 'Email has been confirmed successfully'}});
+                }
+            });
+    }
+
+    logout(req, res) {
+        req.logout();
+        res.status(200).json({success: true, data: {message: 'Logged out successfully'}});
     }
 }
 
