@@ -6,23 +6,25 @@ socket.on('disconnect', () => {
     socket.open();
 });
 
-exports.getForgotPasswordMailOptions = (email) => {
+exports.getForgotPasswordMailOptions = (email, locals) => {
     return {
         to: email,
         from: 'Support',
         sender: 'Subbport',
-        subject: 'Kek',
-        viewUrl: 'forgot-password'
+        subject: 'Reset Password Link',
+        viewUrl: 'forgot-password',
+        locals: locals
     };
 };
 
-exports.getConfirmEmailMailOptions = (email) => {
+exports.getConfirmEmailMailOptions = (email, locals) => {
     return {
         to: email,
         from: 'Support',
         sender: 'Subbport',
         subject: 'Kek',
-        viewUrl: 'confirm-email'
+        viewUrl: 'confirm-email',
+        locals: locals
     };
 };
 

@@ -63,7 +63,11 @@ module.exports = (db, Sequelize) => {
     };
 
     UserModel.hook('beforeUpdate', (user, options) => {
-        console.log('CHANGED', user.changed());
+        if (user.changed('password')) {
+            return UserModel.generateHash(user.password).then(password => {
+                user.password = password;
+            })
+        }
     });
 
     UserModel.hook('beforeCreate', (user, options) => {
