@@ -48,9 +48,11 @@ class AuthController extends ApiController {
         const username = req.body.username;
 
         User.create({email: email, password: password, walletAddress: walletAddress, username: username})
-            .then(() => User.findOrCreate({where: {email: email}}))
-            .spread((user, created) => {
-                generateToken(32, 'hex').then(token => {
+            .then(() => {
+                Promise.all([
+                    User.findOne({where: {email: email}}),
+                    generateToken(32, 'hex')
+                ]).then(([user, token]) => {
                     user.updateAttributes({
                         confirmationToken: token
                     });
@@ -63,6 +65,9 @@ class AuthController extends ApiController {
                         }
                     });
                 });
+            })
+            .catch((dbError) => {
+                return res.status(422).json({success: false, data: {errors: dbError.errors}});
             });
 
     }
