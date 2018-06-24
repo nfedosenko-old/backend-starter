@@ -3,7 +3,7 @@ const {User} = require('../models');
 const passport = require('passport');
 const Promise = require('bluebird');
 const {findUserByEmail, findUserByProperty} = require('../utils/selectors');
-const {generateToken} = require('../utils/helpers');
+const {generateToken, generateRedirectLinkWithToken} = require('../utils/helpers');
 const {getConfirmEmailMailOptions, getForgotPasswordMailOptions, mailerClient} = require('../utils/mailerClient');
 
 class AuthController extends ApiController {
@@ -50,18 +50,19 @@ class AuthController extends ApiController {
         User.create({email: email, password: password, walletAddress: walletAddress, username: username})
             .then(() => User.findOrCreate({where: {email: email}}))
             .spread((user, created) => {
-                user.updateAttributes({
-                    confirmationToken: generateToken(32, 'hex')
-                });
+                generateToken(32, 'hex').then(token => {
+                    user.updateAttributes({
+                        confirmationToken: token
+                    });
 
-                mailerClient.emit('email:send', getConfirmEmailMailOptions(email), (err, result) => {
-                    if (err) {
-                        return res.json({success: false, data: err});
-                    } else {
-                        return res.status(200).json({success: true, data: user.get()});
-                    }
+                    mailerClient.emit('email:send', getConfirmEmailMailOptions(email, {redirectLink: generateRedirectLinkWithToken(req.headers, 'confirm-email', token)}), (err, result) => {
+                        if (err) {
+                            return res.json({success: false, data: err});
+                        } else {
+                            return res.status(200).json({success: true, data: user.get()});
+                        }
+                    });
                 });
-
             });
 
     }
@@ -83,7 +84,7 @@ class AuthController extends ApiController {
                         resetPasswordToken: resetPasswordToken
                     });
 
-                    mailerClient.emit('email:send', getForgotPasswordMailOptions(email, {resetPasswordToken}), (err, result) => {
+                    mailerClient.emit('email:send', getForgotPasswordMailOptions(email, {redirectLink: generateRedirectLinkWithToken(req.headers, 'reset-password', resetPasswordToken)}), (err, result) => {
                         if (err) {
                             return res.json({success: false, data: err});
                         } else {
