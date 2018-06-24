@@ -14,6 +14,10 @@ class StaticController extends BasicController {
         router.get(`${this.prefix}/check-email`, this.checkEmail);
         router.get(`${this.prefix}/account`, this.account);
         router.get(`${this.prefix}/reset-password`, this.resetPassword);
+        router.get(`${this.prefix}/confirm-email`, this.confirmationToken);
+        router.get(`${this.prefix}/recover-token`, this.recoveryToken);
+        router.get(`${this.prefix}/confirm-success`, this.confirmationSuccess);
+        router.get(`${this.prefix}/confirm-failed`, this.confirmationFailed);
         router.get(`${this.prefix}/`, this.landing);
         router.get(`${this.prefix}/404`, this.pageNotFound);
         router.get(`${this.prefix}/test`, (req, res) => {
@@ -70,10 +74,6 @@ class StaticController extends BasicController {
         })
     }
 
-    checkEmail(req, res) {
-        res.render('pages/check-email')
-    }
-
     account(req, res) {
         const isAuthorized = req.isAuthenticated();
         res.render('pages/account', {
@@ -94,6 +94,47 @@ class StaticController extends BasicController {
         })
     }
 
+    checkEmail(req, res) {
+        res.render('pages/info-page', {
+            /* send data to view */
+            title: 'Thank You!',
+            markedSubtitle: 'Please check your email',
+            subtitle: 'for further instructions on how to complete your account setup.',
+        })
+    }
+
+    confirmationSuccess(req, res) {
+        res.render('pages/info-page', {
+            /* send data to view */
+            title: 'Thank You!',
+            markedSubtitle: 'Please check your email',
+            subtitle: 'for further instructions on how to complete your account setup.',
+        })
+    }
+
+    confirmationFailed(req, res) {
+        res.render('pages/info-page', {
+            /* send data to view */
+            title: 'Error!',
+            markedSubtitle: 'Your token invalid or expired!',
+            subtitle: '',
+        })
+    }
+
+    recoveryToken(req, res) {
+        res.render('pages/validate-recovery-token', {
+            /* send data to view */
+            title: 'Congratulations!',
+            markedSubtitle: 'Your account has been confirmed successfully',
+            subtitle: 'now you can login to this website.',
+        })
+    }
+
+    confirmationToken(req, res) {
+        res.render('pages/validate-confirmation-token', {
+            /* send data to view */
+        })
+    }
 
     pageNotFound(req, res) {
         res.render('pages/404', {
