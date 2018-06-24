@@ -106,9 +106,9 @@ class StaticController extends BasicController {
     confirmationSuccess(req, res) {
         res.render('pages/info-page', {
             /* send data to view */
-            title: 'Thank You!',
-            markedSubtitle: 'Please check your email',
-            subtitle: 'for further instructions on how to complete your account setup.',
+            title: 'Congratulations!',
+            markedSubtitle: 'Your account has been confirmed successfully',
+            subtitle: 'now you can login to this website.',
         })
     }
 
@@ -124,9 +124,7 @@ class StaticController extends BasicController {
     recoveryToken(req, res) {
         res.render('pages/validate-recovery-token', {
             /* send data to view */
-            title: 'Congratulations!',
-            markedSubtitle: 'Your account has been confirmed successfully',
-            subtitle: 'now you can login to this website.',
+
         })
     }
 

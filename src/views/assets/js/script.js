@@ -654,6 +654,18 @@
         }
     });
 
+    // reset password from form handler
+    $('#logout').click(function (e) {
+        // make a api request
+        $.post('/api/auth/logout/')
+            .done(function (res) {
+                window.location.href = '/login';
+            })
+            .fail(function (err) {
+                console.log(err);
+            });
+    })
+
     // particlesJS
     var $particles_js = $('#particles-js');
     if ($particles_js.length > 0) {
