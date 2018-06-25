@@ -36,6 +36,17 @@ module.exports = () => {
                 });
             }
 
+            const userPlained = user.get({plain: true});
+
+            if (!userPlained.confirmed) {
+                return done(null, false, {
+                    success: false,
+                    data: {
+                        message: 'Account is not confirmed. Please, check your email for confirmation list'
+                    }
+                });
+            }
+
             return done(null, user.get());
         });
     }));

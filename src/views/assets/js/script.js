@@ -533,10 +533,18 @@
                     window.location.href = '/check-email';
                 })
                 .fail(function (res) {
-                    const errorMessage = res.responseJSON.data.message || 'Server error';
-                    $("#server-error").html(`<div class="alert alert-danger" role="alert">
+                    if (res.responseJSON.data.errors) {
+                        res.responseJSON.data.errors.forEach(error => {
+                            $("#server-error").html(`<div class="alert alert-danger" role="alert">
+                                                                     <strong id="server-error">${error.message}</strong>
+                                                                   </div>`);
+                        });
+                    } else {
+                        const errorMessage = res.responseJSON.data.message || 'Server error';
+                        $("#server-error").html(`<div class="alert alert-danger" role="alert">
                                                                      <strong id="server-error">${errorMessage}</strong>
                                                                    </div>`);
+                    }
                 });
         }
     });

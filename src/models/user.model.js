@@ -12,15 +12,27 @@ module.exports = (db, Sequelize) => {
             type: Sequelize.DataTypes.STRING,
             validate: {
                 isEmail: true
+            },
+            unique: {
+                args: true,
+                msg: 'Email address already in use'
             }
         },
         username: {
             type: Sequelize.DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: {
+                args: true,
+                msg: 'Username already in use'
+            }
         },
         walletAddress: {
             type: Sequelize.DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: {
+                args: true,
+                msg: 'Wallet address already in use'
+            }
         },
         password: {
             type: Sequelize.DataTypes.STRING,
