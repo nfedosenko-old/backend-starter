@@ -480,11 +480,11 @@
         rules: {
             username: {
                 required: true,
-                minlength: 5,
+                minlength: 7,
             },
             email: {
                 required: true,
-                minlength: 10,
+                minlength: 7,
                 email: true
             },
             password: {
@@ -646,9 +646,9 @@
                 recoveryToken = '';
             }
             // build a json object, store in information to dataObject and get values from form
-            const newPassword = $("input[type=password][name=newPassword]").val();
+            const password = $("input[type=password][name=newPassword]").val();
             const requestData = {
-                newPassword,
+                password,
                 resetPasswordToken: recoveryToken
             };
 
@@ -658,8 +658,8 @@
                     console.log('res', res);
                     window.location.href = '/recover-password-success';
                 })
-                .fail(function (res) {
-                    const errorMessage = res.responseJSON.data.message || 'Invalid recovery token.';
+                .fail(function (err) {
+                    const errorMessage = err.responseJSON.data.message || 'Invalid recovery token.';
                     $("#server-error").text(errorMessage);
                 });
         }
