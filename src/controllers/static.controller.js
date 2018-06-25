@@ -18,6 +18,7 @@ class StaticController extends BasicController {
         router.get(`${this.prefix}/recover-token`, this.recoveryToken);
         router.get(`${this.prefix}/confirm-success`, this.confirmationSuccess);
         router.get(`${this.prefix}/confirm-failed`, this.confirmationFailed);
+        router.get(`${this.prefix}/recover-password-success`, this.recoverySuccess);
         router.get(`${this.prefix}/`, this.landing);
         router.get(`${this.prefix}/404`, this.pageNotFound);
         router.get(`${this.prefix}/test`, (req, res) => {
@@ -109,6 +110,15 @@ class StaticController extends BasicController {
             title: 'Congratulations!',
             markedSubtitle: 'Your account has been confirmed successfully',
             subtitle: 'now you can login to this website.',
+        })
+    }
+
+    recoverySuccess(req, res) {
+        res.render('pages/info-page', {
+            /* send data to view */
+            title: 'Congratulations!',
+            markedSubtitle: 'You successfully change you password',
+            subtitle: 'now you can login with the new password.',
         })
     }
 

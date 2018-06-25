@@ -631,24 +631,27 @@
             },
         },
         submitHandler: function () {
-            // TODO: catch recovery token from url
+            let recoveryToken;
+            try {
+                recoveryToken = window.location.search.match(/token=([^&]+)/)['1'] ;
+            } catch {
+                recoveryToken = '';
+            }
             // build a json object, store in information to dataObject and get values from form
             const newPassword = $("input[type=password][name=newPassword]").val();
-            const confirmNewPassword = $("input[type=password][name=confirmNewPassword]").val();
             const requestData = {
                 newPassword,
-                // TODO: add recovery token to request
+                resetPasswordToken: recoveryToken
             };
-            console.log('requestData', requestData);
 
             // make a api request
             $.post('/api/auth/reset-password/', requestData)
                 .done(function (res) {
                     console.log('res', res);
-                    window.location.href = '/login';
+                    window.location.href = '/recover-password-success';
                 })
                 .fail(function (res) {
-                    const errorMessage = res.responseJSON.data.message || 'Server error';
+                    const errorMessage = res.responseJSON.data.message || 'Invalid recovery token.';
                     $("#server-error").text(errorMessage);
                 });
         }
